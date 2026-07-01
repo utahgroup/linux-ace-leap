@@ -624,10 +624,10 @@ function LandingPage() {
             </div>
             <div className="mt-3 flex items-end gap-2">
               <span className="text-sm text-muted-foreground">12x de</span>
-              <span className="font-display text-5xl font-bold text-foreground">R$ 297</span>
+              <span className="font-display text-5xl font-bold text-foreground">R$ 249,90</span>
             </div>
             <div className="text-sm text-muted-foreground mt-1">
-              ou R$ 2.970 à vista (10% off)
+              ou R$ 2.490,00 à vista
             </div>
             <ul className="mt-6 space-y-2 text-sm">
               {[

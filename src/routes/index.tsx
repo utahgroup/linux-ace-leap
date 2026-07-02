@@ -218,6 +218,9 @@ function LandingPage() {
         </div>
       </header>
 
+      {/* BANNER CAROUSEL */}
+      <BannerCarousel />
+
       {/* HERO */}
       <section id="top" className="relative overflow-hidden">
         <div

@@ -128,6 +128,69 @@ function Section({
   );
 }
 
+const BANNERS = [
+  { src: banner01, alt: "Tux do Linux com terminal, LPIC e Red Hat" },
+  { src: banner02, alt: "Estudante de defesa cibernética" },
+  { src: banner03, alt: "Construção de carreira em TI" },
+];
+
+function BannerCarousel() {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % BANNERS.length), 5000);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="relative w-full overflow-hidden bg-background border-b border-border">
+      <div className="relative aspect-[1920/768] w-full">
+        {BANNERS.map((b, i) => (
+          <img
+            key={b.src}
+            src={b.src}
+            alt={b.alt}
+            width={1920}
+            height={768}
+            loading={i === 0 ? "eager" : "lazy"}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              i === idx ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {BANNERS.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-label={`Banner ${i + 1}`}
+              onClick={() => setIdx(i)}
+              className={`h-2 rounded-full transition-all ${
+                i === idx ? "w-8 bg-primary" : "w-2 bg-white/60 hover:bg-white"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WhatsAppFloatingButton() {
+  return (
+    <a
+      href="https://wa.me/5511969311515"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Fale conosco no WhatsApp"
+      className="fixed bottom-6 right-6 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-elegant hover:scale-110 transition-transform animate-pulse-red"
+    >
+      <svg viewBox="0 0 32 32" className="h-8 w-8" fill="currentColor" aria-hidden>
+        <path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.06 2.264v.114c-.014.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.788 2.72.788.688 0 1.29-.171 1.834-.545.417-.287.687-.833.687-1.346 0-.115-.028-.23-.055-.315-.084-.24-2.53-1.35-2.53-1.35zM16.11 27.098c-2.09 0-4.14-.564-5.93-1.626L4.5 27.5l1.62-5.5c-1.16-1.834-1.766-3.955-1.766-6.144C4.354 9.6 9.626 4.328 16.11 4.328S27.867 9.6 27.867 15.856 22.594 27.098 16.11 27.098z"/>
+        <path d="M16.11 1.786C8.28 1.786 1.812 8.253 1.812 16.086c0 2.593.664 5.114 1.928 7.35L1.5 30.5l7.302-2.283a14.246 14.246 0 0 0 7.309 2.02c7.83 0 14.298-6.467 14.298-14.299C30.41 8.11 23.943 1.786 16.11 1.786zm0 26.03c-2.36 0-4.68-.63-6.687-1.834l-.487-.287-4.984 1.303 1.32-4.87-.316-.502a11.732 11.732 0 0 1-1.834-6.34c0-6.53 5.33-11.86 11.988-11.86 3.19 0 6.181 1.246 8.44 3.506a11.83 11.83 0 0 1 3.505 8.44c-.028 6.53-5.359 11.443-11.945 11.443z"/>
+      </svg>
+    </a>
+  );
+}
+
 function LandingPage() {
   const { days, hours, minutes, seconds } = useCountdown();
 

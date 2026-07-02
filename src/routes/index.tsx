@@ -899,12 +899,34 @@ function LeadForm() {
       onSubmit={(e) => {
         e.preventDefault();
         setLoading(true);
+        const fd = new FormData(e.target as HTMLFormElement);
+        const nome = String(fd.get("nome") ?? "");
+        const whatsapp = String(fd.get("whatsapp") ?? "");
+        const email = String(fd.get("email") ?? "");
+
+        const subject = `Nova inscrição — Formação Linux (${nome})`;
+        const body =
+          `Nova lead da landing page — Formação Administrador Linux\n\n` +
+          `Nome: ${nome}\nWhatsApp: ${whatsapp}\nE-mail: ${email}\n`;
+        const mailto = `mailto:comercial@utah.com.br?subject=${encodeURIComponent(
+          subject,
+        )}&body=${encodeURIComponent(body)}`;
+
+        const waText =
+          `Olá! Quero garantir minha vaga na Formação Linux (RHCSA + LPIC-1).\n\n` +
+          `Nome: ${nome}\nE-mail: ${email}\nWhatsApp: ${whatsapp}`;
+        const waUrl = `https://wa.me/5511969311515?text=${encodeURIComponent(waText)}`;
+
+        // Abre o cliente de e-mail em nova aba (best-effort) e redireciona ao WhatsApp
+        window.open(mailto, "_blank");
+        toast.success("Redirecionando você para o WhatsApp do time comercial...");
+        (e.target as HTMLFormElement).reset();
         setTimeout(() => {
           setLoading(false);
-          toast.success("Recebemos seus dados! Em breve entraremos em contato via WhatsApp.");
-          (e.target as HTMLFormElement).reset();
-        }, 800);
+          window.location.href = waUrl;
+        }, 600);
       }}
+
       className="w-full max-w-xl rounded-2xl border border-border bg-surface p-6 md:p-8 text-left shadow-card"
     >
       <div className="grid gap-3">

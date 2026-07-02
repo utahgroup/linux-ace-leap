@@ -23,6 +23,7 @@ import {
   Lock,
   Network,
   GraduationCap,
+  Download,
 } from "lucide-react";
 import logoUtah from "@/assets/logo-utah.png";
 import badgeLpic from "@/assets/badge-lpic1.png";

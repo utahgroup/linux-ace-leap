@@ -29,6 +29,9 @@ import logoUtah from "@/assets/logo-utah.png";
 import badgeLpic from "@/assets/badge-lpic1.png";
 import badgeRhcsa from "@/assets/badge-rhcsa.png";
 import heroBg from "@/assets/hero-bg.jpg";
+import banner01 from "@/assets/banner-01-tux.jpg";
+import banner02 from "@/assets/banner-02-cyber.jpg";
+import banner03 from "@/assets/banner-03-carreira.jpg";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,

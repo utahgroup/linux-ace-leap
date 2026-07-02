@@ -352,6 +352,16 @@ function LandingPage() {
             </div>
           ))}
         </div>
+        <div className="mt-10 flex justify-center">
+          <a
+            href="/ementa-completa.pdf"
+            download="Ementa_Completa_Administrador_Linux_RHCSA_LPIC1.pdf"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-4 text-base font-bold text-primary-foreground hover:bg-primary-glow transition shadow-elegant"
+          >
+            <Download className="w-5 h-5" />
+            Veja a Ementa Completa
+          </a>
+        </div>
       </Section>
 
       {/* DIFERENCIAIS */}

@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
+import { sendLeadEmail } from "@/lib/lead-email.functions";
 import {
   Check,
   X,

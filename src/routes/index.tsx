@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
+import { sendLeadEmail } from "@/lib/lead-email.functions";
 import {
   Check,
   X,
@@ -893,38 +895,45 @@ function LandingPage() {
 
 function LeadForm() {
   const [loading, setLoading] = useState(false);
+  const sendLead = useServerFn(sendLeadEmail);
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
         setLoading(true);
-        const fd = new FormData(e.target as HTMLFormElement);
-        const nome = String(fd.get("nome") ?? "");
-        const whatsapp = String(fd.get("whatsapp") ?? "");
-        const email = String(fd.get("email") ?? "");
+        const form = e.target as HTMLFormElement;
+        const fd = new FormData(form);
+        const nome = String(fd.get("nome") ?? "").trim();
+        const whatsapp = String(fd.get("whatsapp") ?? "").trim();
+        const email = String(fd.get("email") ?? "").trim();
 
-        const subject = `Nova inscrição — Formação Linux (${nome})`;
-        const body =
-          `Nova lead da landing page — Formação Administrador Linux\n\n` +
-          `Nome: ${nome}\nWhatsApp: ${whatsapp}\nE-mail: ${email}\n`;
-        const mailto = `mailto:comercial@utah.com.br?subject=${encodeURIComponent(
-          subject,
-        )}&body=${encodeURIComponent(body)}`;
+        const waUrl = `https://wa.me/5511969311515?text=${encodeURIComponent(
+          "Ola, vim do site e quero ser um especialista.",
+        )}`;
 
-        const waText =
-          `Olá! Quero garantir minha vaga na Formação Linux (RHCSA + LPIC-1).\n\n` +
-          `Nome: ${nome}\nE-mail: ${email}\nWhatsApp: ${whatsapp}`;
-        const waUrl = `https://wa.me/5511969311515?text=${encodeURIComponent(waText)}`;
+        try {
+          const result = await sendLead({ data: { nome, whatsapp, email } });
+          if (!result.ok) {
+            toast.error("Não foi possível enviar seu cadastro. Tente novamente em instantes.");
+            setLoading(false);
+            return;
+          }
+        } catch (err) {
+          console.error(err);
+          toast.error("Erro ao enviar. Tente novamente em instantes.");
+          setLoading(false);
+          return;
+        }
 
-        // Abre o cliente de e-mail em nova aba (best-effort) e redireciona ao WhatsApp
-        window.open(mailto, "_blank");
-        toast.success("Redirecionando você para o WhatsApp do time comercial...");
-        (e.target as HTMLFormElement).reset();
+        toast.success(
+          "Meus Parabéns. Em breve você receberá um contato para caminhar com os gigantes.",
+        );
+        form.reset();
         setTimeout(() => {
           setLoading(false);
           window.location.href = waUrl;
-        }, 600);
+        }, 3000);
       }}
 
       className="w-full max-w-xl rounded-2xl border border-border bg-surface p-6 md:p-8 text-left shadow-card"

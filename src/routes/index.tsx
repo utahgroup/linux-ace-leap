@@ -915,13 +915,20 @@ function LeadForm() {
         try {
           const result = await sendLead({ data: { nome, whatsapp, email } });
           if (!result.ok) {
-            toast.error("Não foi possível enviar seu cadastro. Tente novamente em instantes.");
+            console.error("[lead-form] envio falhou:", result);
+            toast.error(
+              `Falha ao enviar: ${result.error ?? "erro desconhecido"}. Tente novamente.`,
+              { duration: 8000 },
+            );
             setLoading(false);
             return;
           }
         } catch (err) {
-          console.error(err);
-          toast.error("Erro ao enviar. Tente novamente em instantes.");
+          console.error("[lead-form] exceção no envio:", err);
+          toast.error(
+            `Erro ao enviar: ${err instanceof Error ? err.message : String(err)}`,
+            { duration: 8000 },
+          );
           setLoading(false);
           return;
         }
